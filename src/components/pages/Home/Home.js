@@ -1,7 +1,12 @@
+import TablesContainer from "../../features/TablesContainer/TablesContainer";
+
 const Home = () => {
   return (
-    <div className="text-center py-5">
-      <h2>Home Page</h2>
+    <div>
+      <div>
+        <h2>All tables</h2>
+      </div>
+      <TablesContainer />
     </div>
   );
 };
