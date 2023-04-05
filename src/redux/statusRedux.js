@@ -1,3 +1,5 @@
+import { API_URL } from "../config";
+
 //selectors
 export const getAllStatus = ({ status }) => status;
 
@@ -9,7 +11,7 @@ const PULL_STATUS = createActionName('PULL_STATUS');
 export const pullStatus = payload => ({ type: PULL_STATUS, payload });
 export const fetchStatus = () => {
   return (dispatch) => {
-    fetch('http://localhost:3131/api/status')
+    fetch(`${API_URL}/status`)
       .then(res => res.json())
       .then(status => dispatch(pullStatus(status)))
   }
