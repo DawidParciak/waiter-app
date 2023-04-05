@@ -3,7 +3,6 @@ import { getAllTables } from "../../../redux/tablesRedux"
 import { Container, Row } from "react-bootstrap";
 import TableSingle from "../TableSingle/TableSingle";
 
-
 const TablesContainer = () => {
   const tables = useSelector(getAllTables);
 
