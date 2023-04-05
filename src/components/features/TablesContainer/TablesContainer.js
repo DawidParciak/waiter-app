@@ -6,11 +6,13 @@ import TableSingle from "../TableSingle/TableSingle";
 const TablesContainer = () => {
   const tables = useSelector(getAllTables);
 
+  console.log("tables: ", tables);
+
   return (
     <Container className="px-0 py-3">
       <Row>
-        {tables.map( table => (
-          <TableSingle key={table.id} {...table} />
+        {tables.map( (table, index) => (
+          <TableSingle key={index} {...table} />
         ))}
       </Row>
     </Container>

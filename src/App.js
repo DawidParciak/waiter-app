@@ -5,8 +5,15 @@ import { Route, Routes } from "react-router-dom";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Home from "./components/pages/Home/Home";
 import Table from "./components/pages/Table/Table";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchTables } from "./redux/tablesRedux";
 
 function App() {
+  const dispatch = useDispatch();
+  
+  useEffect(() => fetchTables(dispatch), [dispatch]);
+
   return (
     <Container>
       <Header />
