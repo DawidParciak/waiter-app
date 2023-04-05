@@ -39,6 +39,12 @@ const TableForm = ({ action }) => {
     }
   }, [peopleAmount, maxPeopleAmount]);
 
+  useEffect(() => {
+    if (status !== "Busy") {
+      setBill(0)
+    }
+  }, [status]);
+
   const handleSubmit = event => {
     event.preventDefault();
     action({

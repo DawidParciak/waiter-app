@@ -1,5 +1,5 @@
 //selectors
-export const getAllTables = state => state.tables;
+export const getAllTables = ({ tables }) => tables;
 export const getTableById = ({ tables }, tableId) =>
   tables.find(table => table.id === tableId);
 
@@ -11,11 +11,32 @@ const UPDATE_TABLE = createActionName('UPDATE_TABLE');
 // action creators
 export const pullTables = payload => ({ type: PULL_TABLES, payload });
 export const updateTable = payload => ({ type: UPDATE_TABLE, payload });
-export const fetchTables = dispatch => {
-  fetch('http://localhost:3131/api/tables')
-    .then(res => res.json())
-    .then(tables => dispatch(pullTables(tables)))
+export const fetchTables = () => {
+  return (dispatch) => {
+    fetch('http://localhost:3131/api/tables')
+      .then(res => res.json())
+      .then(tables => dispatch(pullTables(tables)))
+  }
 };
+export const updateTableRequest = (table) => {
+  return (dispatch) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: table.id,
+        status: table.status,
+        peopleAmount: table.peopleAmount,
+        maxPeopleAmount: table.maxPeopleAmount,
+        bill: table.bill,
+      }),
+    };
+    fetch(`http://localhost:3131/tables/${table.id}`, options)
+      .then(() => dispatch(updateTable(table)))
+  }
+}
 
 const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
