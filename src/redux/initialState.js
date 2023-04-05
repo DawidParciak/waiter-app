@@ -27,6 +27,13 @@ const initialState = {
       "peopleAmount": 0,
       "maxPeopleAmount": 3,
       "bill": 0
+    },
+    {
+      "id": "5",
+      "status": "Reserved",
+      "peopleAmount": 0,
+      "maxPeopleAmount": 8,
+      "bill": 0
     }
   ]
 };

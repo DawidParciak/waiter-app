@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const TableSingle = props => {
   return (
     <Col lg='12' className="my-1">
-      <Card.Body className="d-flex justify-content-between border-bottom align-items-center">
+      <Card.Body className="d-flex justify-content-between border-bottom align-items-center p-0">
         <div className="d-flex">
-          <Card.Title className="d-flex align-items-end">
+          <Card.Title className="d-flex align-items-end mb-0">
             <h4 className="mb-0" >Table: {props.id}</h4>
           </Card.Title>
-          <Card.Subtitle className="d-flex align-items-end ps-3 fw-bold">
+          <Card.Subtitle className="d-flex align-items-end ps-4 fw-bold">
             Status:&nbsp;<span className="fw-normal">{props.status}</span>
           </Card.Subtitle>
         </div>

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { getTableById } from "../../../redux/tablesRedux";
 import { Button, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TableForm = ({ action }) => {
 
@@ -15,7 +15,32 @@ const TableForm = ({ action }) => {
   const [maxPeopleAmount, setMaxPeopleAmount] = useState(tableData.maxPeopleAmount);
   const [bill, setBill] = useState(tableData.bill);
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    if (status === "Cleaning" || status === "Free") {
+      setPeopleAmount(0);
+    } else {
+      setPeopleAmount(tableData.peopleAmount)
+    }
+  }, [status, tableData.peopleAmount]);
+
+  useEffect(() => {
+    if (maxPeopleAmount > 10) {
+      setMaxPeopleAmount(10);
+    } else if (maxPeopleAmount < 0) {
+      setMaxPeopleAmount(0)
+    }
+  }, [maxPeopleAmount, peopleAmount]);
+
+  useEffect(() => {
+    if (peopleAmount > maxPeopleAmount) {
+      setPeopleAmount(maxPeopleAmount)
+    } else if (peopleAmount < 0){
+      setPeopleAmount(0)
+    }
+  }, [peopleAmount, maxPeopleAmount]);
+
+  const handleSubmit = event => {
+    event.preventDefault();
     action({
       table,
       status,
@@ -35,7 +60,7 @@ const TableForm = ({ action }) => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="d-flex justify-content-between my-2">
             <h5 className="col-8">Status: </h5>
-            <Form.Select className="form-select d-flex" value={status} onChange={e => setStatus(e.target.value)}>
+            <Form.Select className="form-select d-flex" value={status} id="status" onChange={e => setStatus(e.target.value)}>
               <option>Busy</option>
               <option>Free</option>
               <option>Cleaning</option>
@@ -45,30 +70,34 @@ const TableForm = ({ action }) => {
           <Form.Group className="d-flex justify-content-between">
             <h5 className="col-8">People: </h5> 
             <Form.Control 
-              className="form-control"
+              id="peopleAmount"
               value={peopleAmount}
-              max={maxPeopleAmount}
+              min={0}
               type="number"
               onChange={e => setPeopleAmount(e.target.value)}
             /> 
             <p className="mx-2 mb-0 d-flex align-items-center">/</p>
             <Form.Control 
-              className="form-control"
+              id="maxPeopleAmount"
               value={maxPeopleAmount}
+              min={0}
               max={10}
               type="number"
               onChange={e => setMaxPeopleAmount(e.target.value)}
             /> 
           </Form.Group>
-          <Form.Group className="d-flex justify-content-between my-2">
-            <h5 className="col-8">Bill: </h5> 
-            <Form.Control 
-              className="form-control"
-              value={bill}
-              onChange={e => setBill(e.target.value)}
-              type="number"
-            />
-          </Form.Group>
+          {status === "Busy" && (
+            <Form.Group className="d-flex justify-content-between my-2">
+              <h5 className="col-8">Bill: </h5> 
+              <Form.Control 
+                id="bill"
+                value={bill}
+                min={0}
+                onChange={e => setBill(e.target.value)}
+                type="number"
+              />
+            </Form.Group>
+          )};
           <Button className="btn btn-primary my-2" type="submit">
             Update
           </Button>

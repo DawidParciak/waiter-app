@@ -1,9 +1,17 @@
+import { useState } from "react";
+import LoadingSpinner from "../../common/LoadingSpinner/LoadingSpinner";
 import TableUpdateForm from "../../features/TableUpdateForm/TableUpdateForm";
 
 const Table = () => {
+  const [loading, setLoading] =useState(true);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
+
   return (
     <div>
-      <TableUpdateForm />
+      {loading ? <LoadingSpinner /> :<TableUpdateForm />}
     </div>
   );
 };
